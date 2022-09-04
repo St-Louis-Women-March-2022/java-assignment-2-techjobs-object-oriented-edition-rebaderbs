@@ -1,5 +1,6 @@
 package org.launchcode.techjobs.oo;
 
+import java.lang.reflect.Field;
 import java.util.Objects;
 
 public class Job {
@@ -29,6 +30,39 @@ public class Job {
         this.positionType = positionType;
         this.coreCompetency = coreCompetency;
     }
+
+    //custom toString method
+    @Override
+    public String toString()    {
+//label created for each field
+        String[] labels = {"ID: ", "Name: ", "Employer: ", "Location: ", "Position Type: ", "Core Competency: "};
+        Field[] fields = Job.class.getDeclaredFields();
+//empty field
+        String emptyIdField = "Data not available";
+//first created a message field for a blank line; returned message; first test passes
+        String message = "\n";
+        int index = 0;
+
+        for (Field f : fields) {
+            if (f.getName() == "nextId") {
+
+            } else {
+                try {
+                    if (f.get(this) == null) {
+                        message = message + labels[index] + emptyIdField + "\n";
+                    } else {
+                        message = message + labels[index] + f.get(this) + "\n";
+                    }
+                    index++;
+                } catch (Exception e)   {
+                    message = message + labels[index] + emptyIdField + "\n";
+                    index++;
+                }
+            }
+        }
+        return message;
+    }
+
     // TODO: Add custom equals and hashCode methods. Consider two Job objects "equal" when their id fields
     //  match.
 
@@ -90,4 +124,5 @@ public class Job {
     public void setCoreCompetency(CoreCompetency coreCompetency) {
         this.coreCompetency = coreCompetency;
     }
+
 }
