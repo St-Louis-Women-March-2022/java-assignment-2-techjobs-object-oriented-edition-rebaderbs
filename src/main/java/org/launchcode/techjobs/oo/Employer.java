@@ -6,16 +6,22 @@ public class Employer {
 
     private int id;
     private static int nextId = 1;
+    //static so the changing value is NOT stored in any Employer object
     private String value;
 
     public Employer() {
         id = nextId;
         nextId++;
+        //first constructor: no arguments; assigns value of id = nextId;
+        //increments nextId by 1 so that EVERY Employer object will have a different ID#
     }
 
     public Employer(String value) {
         this();
         this.value = value;
+        //second constructor: assigns a value to value field;
+        //initializes id for the object by calling 1st constructor with this() - REMEMBER this() or super() must be first statement in constructor!!!!
+        //including this() will make initializing the ID a default behavior
     }
 
     // Custom toString, equals, and hashCode methods:
