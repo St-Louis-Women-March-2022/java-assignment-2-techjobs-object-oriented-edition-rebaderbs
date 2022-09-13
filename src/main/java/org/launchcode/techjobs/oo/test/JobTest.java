@@ -1,6 +1,5 @@
 package org.launchcode.techjobs.oo.test;
 
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
@@ -15,24 +14,23 @@ import static org.junit.Assert.assertFalse;
  */
 @RunWith(JUnit4.class)
 public class JobTest {
-
-    Job emptyJob1;
-    Job emptyJob2;
-    Job testJob1;
-    Job testJob2;
-    Job emptyFieldsTest;
-
-//    simplified tests by declaring fields above and defined below and removed from each test
-    @Before
-    public void createJobObjects()  {
-        emptyJob1 = new Job();
-        emptyJob2 = new Job();
-        testJob1 = new Job("Product tester", new Employer("ACME"), new Location("Desert"), new PositionType("Quality control"), new CoreCompetency("Persistence"));
-        testJob2 = new Job("Product tester", new Employer("ACME"), new Location("Desert"), new PositionType("Quality control"), new CoreCompetency("Persistence"));
-        emptyFieldsTest = new Job("Product tester", new Employer(""), new Location("Desert"), new PositionType("Quality control"), new CoreCompetency(""));
-    }
+//    Job emptyJob1;
+//    Job emptyJob2;
+//    Job testJob1;
+//    Job testJob2;
+    //simplified tests by declaring fields above and defined below
+//    @Before
+//    public void createJobObjects()  {
+//        Job emptyJob1 = new Job();
+//        Job emptyJob2 = new Job();
+//        Job testJob1 = new Job("Product tester", new Employer("ACME"), new Location("Desert"), new PositionType("Quality control"), new CoreCompetency("Persistence"));
+//    }
     @Test
     public void testSettingJobId()  {
+        Job emptyJob1 = new Job();
+        Job emptyJob2 = new Job();
+//        Assert.assertNotEquals(emptyJob1, emptyJob2);
+//        assertFalse(emptyJob1.equals(emptyJob2));
         assertTrue((emptyJob2.getId() - 1) == emptyJob1.getId());
     }
 
@@ -40,6 +38,8 @@ public class JobTest {
 //objectName instanceof ClassName - used to check the class of an object
     @Test
     public void testJobConstructorSetsAllFields()   {
+        Job testJob1 = new Job("Product tester", new Employer("ACME"), new Location("Desert"), new PositionType("Quality control"), new CoreCompetency("Persistence"));
+
         //each assertion will assertTrue if that object is an instance of the Class AND each parameter is equal to the test job's parameters
         //updated to assertEquals on each test (initially had assertTrue, but need assertEquals per the reading - whoops!)
         assertTrue(testJob1.getName() instanceof String);
@@ -57,12 +57,16 @@ public class JobTest {
 
     @Test
     public void testJobsForEquality()   {
+        Job job1 = new Job("Product tester", new Employer("ACME"), new Location("Desert"), new PositionType("Quality control"), new CoreCompetency("Persistence"));
+        Job job2 = new Job("Product tester", new Employer("ACME"), new Location("Desert"), new PositionType("Quality control"), new CoreCompetency("Persistence"));
 //        assertEquals(job1, job1);
-        assertFalse(testJob1.equals(testJob2));
+        assertFalse(job1.equals(job2));
     }
 
     @Test
     public void testToStringStartsAndEndsWithNewLine()  {
+        Job testJob1 = new Job("Product tester", new Employer("ACME"), new Location("Desert"), new PositionType("Quality control"), new CoreCompetency("Persistence"));
+
         //created variable to determine last index (b/c it will be diff each time)
         int lastIndex = (testJob1.toString().length()-1);
 
@@ -73,6 +77,7 @@ public class JobTest {
 
     @Test
     public void testToStringContainsCorrectLabelsAndData()  {
+        Job testJob1 = new Job("Product tester", new Employer("ACME"), new Location("Desert"), new PositionType("Quality control"), new CoreCompetency("Persistence"));
         String[] lines = testJob1.toString().trim().split("\n");
 
         //autograder test failed: added an assertEquals(any String, any String) for it to pass;
@@ -100,17 +105,18 @@ public class JobTest {
 
     @Test
     public void testToStringHandlesEmptyField() {
+        Job testJob1 = new Job("Product tester", new Employer(""), new Location("Desert"), new PositionType("Quality control"), new CoreCompetency(""));
 
-        String returnString = emptyFieldsTest.toString();
-
-        assertTrue(returnString.contains("ID: " + emptyFieldsTest.getId()));
+        String returnString = testJob1.toString();
+//
+        assertTrue(returnString.contains("ID: " + testJob1.getId()));
         assertTrue(returnString.contains("Name: Product tester"));
         assertTrue(returnString.contains("Employer: Data not available"));
         assertTrue(returnString.contains("Location: Desert"));
         assertTrue(returnString.contains("Position Type: Quality control"));
         assertTrue(returnString.contains("Core Competency: Data not available"));
 
-        assertEquals("Name: Product tester", "Name: " + emptyFieldsTest.getName());
-        assertEquals("Employer: Data not available", "Employer: " + emptyFieldsTest.getEmployer());
+        assertEquals("Name: Product tester", "Name: " + testJob1.getName());
+        assertEquals("Employer: Data not available", "Employer: " + testJob1.getEmployer());
     }
 }
