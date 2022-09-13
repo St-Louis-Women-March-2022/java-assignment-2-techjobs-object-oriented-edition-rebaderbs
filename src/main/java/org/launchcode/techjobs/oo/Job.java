@@ -34,33 +34,28 @@ public class Job {
     //custom toString method
     @Override
     public String toString()    {
-//label created for each field
-        String[] labels = {"ID: ", "Name: ", "Employer: ", "Location: ", "Position Type: ", "Core Competency: "};
-        Field[] fields = Job.class.getDeclaredFields();
-//empty field
-        String emptyIdField = "Data not available";
-//first created a message field for a blank line; returned message; first test passes
-        String message = "\n";
-        int index = 0;
-
-        for (Field f : fields) {
-            if (f.getName() == "nextId") {
-
-            } else {
-                try {
-                    if (f.get(this) == null) {
-                        message = message + labels[index] + emptyIdField + "\n";
-                    } else {
-                        message = message + labels[index] + f.get(this) + "\n";
-                    }
-                    index++;
-                } catch (Exception e)   {
-                    message = message + labels[index] + emptyIdField + "\n";
-                    index++;
-                }
-            }
+        if (this.getName().equals(""))  {
+            this.setName(("Data not available"));
         }
-        return message;
+        if (this.getEmployer().getValue().equals(""))   {
+            this.setEmployer(new Employer("Data not available"));
+        }
+        if (this.getLocation().getValue().equals(""))   {
+            this.setLocation(new Location("Data not available"));
+        }
+        if (this.getPositionType().getValue().equals(""))   {
+            this.setPositionType(new PositionType("Data not available"));
+        }
+        if (this.getCoreCompetency().getValue().equals(""))   {
+            this.setCoreCompetency(new CoreCompetency("Data not available"));
+        }
+
+        return "\n" + "ID: " + id + "\n" +
+                "Name: " + name + "\n" +
+                "Employer: " + employer + "\n" +
+                "Location: " + location + "\n" +
+                "Position Type: " + positionType + "\n" +
+                "Core Competency: " + coreCompetency + "\n";
     }
 
     // TODO: Add custom equals and hashCode methods. Consider two Job objects "equal" when their id fields
@@ -70,13 +65,14 @@ public class Job {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+//        if (o == null || getClass() != o.getClass()) return false;
+        if (!(o instanceof Job)) return false;
         Job job = (Job) o;
-        return id == job.id;
+        return getId() == job.getId();
     }
     @Override
     public int hashCode() {
-        return Objects.hash(id);
+        return Objects.hash(getId());
     }
 
     // TODO: Add getters for each field EXCEPT nextId. Add setters for each field EXCEPT nextID
